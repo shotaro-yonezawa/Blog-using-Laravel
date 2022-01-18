@@ -19,7 +19,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * プロダクト一覧を表示する
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
@@ -27,10 +27,12 @@ class HomeController extends Controller
     {
         $word = $request->word;
         // フォームから受け取った検索ワードを$wordに格納
+
         $selectedCompany = $request->company;
         // フォームから受け取ったメーカー名セレクトボックスの内容を$selectedCompanyに格納
+
         $companies = Company::all();
-        // dd($word,$selectedCompany,'0');
+        
         if(isset($word)||isset($selectedCompany)){
             if($word === null){
                 if(isset($selectedCompany)){
@@ -40,7 +42,6 @@ class HomeController extends Controller
                     ->where([['companies.company_name', 'LIKE', "%$selectedCompany%"]])
                     ->get();
                 }
-                // dd($word,$selectedCompany,'1');
             }elseif($selectedCompany === null){
                 if(isset($word)){
                     $products = DB::table('products')
@@ -49,18 +50,14 @@ class HomeController extends Controller
                     ->where([['product_name', 'LIKE', "%$word%"]])
                     ->get();
                 }
-                // dd($word,$selectedCompany,'2');
             }else{
                 $products = DB::table('products')
                 ->join('companies','products.company_id','=','companies.id')
                 ->select('products.*','companies.company_name')
                 ->where([['product_name', 'LIKE', "%$word%"],['companies.company_name', 'LIKE', "$selectedCompany"]])
                 ->get();
-                // dd($word,$selectedCompany,'3');
             }
         }else{
-            // $products = Product::all();
-            // $products = Company::all();
             $products = DB::table('products')
             ->join('companies','products.company_id','=','companies.id')
             ->select('products.*','companies.company_name')
