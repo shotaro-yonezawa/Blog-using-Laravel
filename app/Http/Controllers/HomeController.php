@@ -31,42 +31,28 @@ class HomeController extends Controller
         $selectedCompany = $request->company;
         // フォームから受け取ったメーカー名セレクトボックスの内容を$selectedCompanyに格納
 
-        $companies = Company::all();
+        $companies = new Company;
+        $products = new Product;
+        $allCompany = $companies->getCompanies();
         
         if(isset($word)||isset($selectedCompany)){
             if($word === null){
                 if(isset($selectedCompany)){
-                    $products = DB::table('products')
-                    ->join('companies','products.company_id','=','companies.id')
-                    ->select('products.*','companies.company_name')
-                    ->where([['companies.company_name', 'LIKE', "%$selectedCompany%"]])
-                    ->get();
+                    $selectedProducts = $products->getProductsByCompany($selectedCompany);
                 }
             }elseif($selectedCompany === null){
                 if(isset($word)){
-                    $products = DB::table('products')
-                    ->join('companies','products.company_id','=','companies.id')
-                    ->select('products.*','companies.company_name')
-                    ->where([['product_name', 'LIKE', "%$word%"]])
-                    ->get();
+                    $selectedProducts = $products->getProductsByWord($word);
                 }
             }else{
-                $products = DB::table('products')
-                ->join('companies','products.company_id','=','companies.id')
-                ->select('products.*','companies.company_name')
-                ->where([['product_name', 'LIKE', "%$word%"],['companies.company_name', 'LIKE', "$selectedCompany"]])
-                ->get();
+                $selectedProducts = $products->getProductsByWordAndCompany($word,$selectedCompany);
             }
         }else{
-            $products = DB::table('products')
-            ->join('companies','products.company_id','=','companies.id')
-            ->select('products.*','companies.company_name')
-            ->get();
-            // dd($products);
+            $selectedProducts = $products->getProducts();
         }
         $request->session()->flash('inputWord', "$word");
         $request->session()->flash('selectedCompany', "$selectedCompany");
-        return view('product.list', ['products'=>$products],['companies'=>$companies]);
+        return view('product.list', ['products'=>$selectedProducts],['companies'=>$allCompany]);
         // return view('home');
     }
 }

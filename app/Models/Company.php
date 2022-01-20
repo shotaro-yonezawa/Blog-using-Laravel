@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+
 
 class Company extends Model
 {
@@ -14,4 +16,10 @@ class Company extends Model
         'company_name',
         'street_address'
     ];
+
+    public function getCompanies(){
+        return Company::all();
+    }
+
+    
 }

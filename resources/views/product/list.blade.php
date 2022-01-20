@@ -56,13 +56,4 @@
         </table>
     </div>
 </div>
-<script>
-function checkDelete(){
-if(window.confirm('削除してよろしいですか？')){
-    return true;
-} else {
-    return false;
-}
-}
-</script>
 @endsection
