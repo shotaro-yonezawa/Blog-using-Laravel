@@ -47,7 +47,7 @@
                 <td>{{ $product->stock }}</td>
                 <td>{{ $product->company_name }}</td>
                 <td><a class="btn btn-primary" href="/product/{{ $product->id }}">詳細</a></td>
-                <form method="POST" action="{{ route('productDelete', $product->id) }}" onSubmit="return checkDelete()">
+                <form method="POST" action="{{ route('productDelete', $product->id) }}" onSubmit="return exeConfirm('削除してよろしいですか？')">
                 @csrf
                     <td><button type="submit" class="btn btn-primary" onclick=>削除</button></td>
                 </form>
