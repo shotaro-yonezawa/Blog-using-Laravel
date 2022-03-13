@@ -31,14 +31,11 @@
 
         <br>
         <p>コメント：</p>
-        <div>
-            @if(!empty($product->product_image))
-            <img class="product_image" src="{{ Storage::url($product->product_image) }}" alt="" width="100px" height="100px">
-            @endif
-        </div>
         <p>{{ $product->comment }}</p>
         <button type="button" class="btn btn-primary" onclick="location.href='{{ route('home') }}'">戻る</button>
         <button type="button" class="btn btn-primary float-right" onclick="location.href='/product/edit/{{$product->id}}'">編集</button>
+        <br>
+        <br>
     </div>
 </div>
 @endsection

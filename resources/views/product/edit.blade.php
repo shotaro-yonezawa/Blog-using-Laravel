@@ -97,7 +97,7 @@
                 @endif
             </div>
             <div class="mt-5">
-                <a class="btn btn-secondary" href="{{ route('products') }}">
+                <a class="btn btn-secondary" href="/product/{{$product->id}}">
                     戻る
                 </a>
                 <button type="submit" class="btn btn-primary">
@@ -105,6 +105,8 @@
                 </button>
             </div>
         </form>
+        <br>
+        <br>
     </div>
 </div>
 @endsection

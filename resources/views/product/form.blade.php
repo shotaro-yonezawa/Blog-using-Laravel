@@ -29,13 +29,13 @@
                 </label>
                 <br>
                 <select name="company_id">
-                    <option hidden>選択してください</option>
+                    <option hidden value=>選択してください</option>
                     @foreach($companies as $company){
                     <option value="{{ $company->id }}" @if($company->id == old('company_id')) selected @endif>{{ $company->company_name }}</option>
                     }
                     @endforeach
                 </select>
-                @if ($errors->has('price'))
+                @if ($errors->has('company_id'))
                     <div class="text-danger">
                         {{ $errors->first('company_id') }}
                     </div>
@@ -107,6 +107,8 @@
                 </button>
             </div>
         </form>
+        <br>
+        <br>
     </div>
 </div>
 @endsection

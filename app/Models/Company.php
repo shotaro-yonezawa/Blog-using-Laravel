@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-
 class Company extends Model
 {
     //テーブル名
@@ -20,6 +19,4 @@ class Company extends Model
     public function getCompanies(){
         return Company::all();
     }
-
-    
 }

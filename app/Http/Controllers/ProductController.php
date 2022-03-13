@@ -2,31 +2,17 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Company;
 use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    /**
-     * プロダクト一覧を表示する
-     * 
-     * @return view
-     */
-    // public function showList(){
-    //     if (Auth::check()) {
-    //         // ユーザーはログインしている
-    //             $allCompany = Company::all();
-    //             $products = Product::all();
-    //             return view('product.list', ['products'=>$products],['companies'=>$allCompany]);
-    //     }else{
-    //         return redirect(route('home'));
-    //     }
-    // }
-
     /**
      * プロダクト詳細を表示する
      * @param int $id
@@ -70,7 +56,7 @@ class ProductController extends Controller
     
     /**
      * プロダクト登録
-     * 
+     * @param App\Http\Requests\ProductRequest
      * @return view
      */
     public function exeStore(ProductRequest $request){
@@ -88,7 +74,7 @@ class ProductController extends Controller
                 //ここでstore()メソッドを使っているが、これは画像データをstorageに保存している
                 $productImagePath = $productImage->store('public/uploads');
             } else {
-                $productImagePath = "";
+                $productImagePath = null;
             }
             $data = [
                 // 'id'=> $request->id,
@@ -109,7 +95,6 @@ class ProductController extends Controller
         }
         \Session::flash('err_msg','プロダクトを登録しました');
         return redirect(route('home'));
-        
     }
     
     /**
@@ -138,7 +123,7 @@ class ProductController extends Controller
 
     /**
      * プロダクト編集
-     * 
+     * @param App\Http\Requests\ProductRequest
      * @return view
      */
     public function exeUpdate(ProductRequest $request){
@@ -157,7 +142,7 @@ class ProductController extends Controller
                 //ここでstore()メソッドを使っているが、これは画像データをstorageに保存している
                 $productImagePath = $productImage->store('public/uploads');
             } else {
-                $productImagePath = "";
+                $productImagePath = null;
             }
             
             // プロダクトを登録
@@ -206,5 +191,4 @@ class ProductController extends Controller
         \Session::flash('err_msg','削除しました');
         return redirect(route('home'));
     }
-    
 }

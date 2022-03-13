@@ -25,10 +25,18 @@ Route::get('/product/edit/{id}', 'ProductController@showEdit')->name('edit');
 Route::post('/product/update', 'ProductController@exeUpdate')->name('update');
 // プロダクト削除
 Route::post('/product/delete/{id}', 'ProductController@exeDelete')->name('productDelete');
+// プロダクト検索
+Route::post('/search', 'HomeController@index')->name('search');
 
 // 認証機能
 Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 
-// プロダクト検索
-Route::post('/search', 'HomeController@index')->name('search');
+// Ajax:全プロダクト取得
+Route::get('/ajaxGet', 'HomeController@ajaxGet')->name('ajaxGet');
+// Ajax:プロダクト検索
+Route::post('/ajaxSearch', 'HomeController@ajaxSearch')->name('ajaxSearch');
+// Ajax:ソート機能
+Route::post('/ajaxSort', 'HomeController@ajaxSort')->name('ajaxSort');
+// Ajax:プロダクト削除
+Route::post('/ajaxDelete', 'HomeController@ajaxDelete')->name('ajaxDelete');

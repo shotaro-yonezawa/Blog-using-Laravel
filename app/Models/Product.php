@@ -31,6 +31,20 @@ class Product extends Model
                 ->select('products.*','companies.company_name')
                 ->get();
     }
+    
+    public function searchProducts($word,$selectedCompany,$upperPriceLimit,$lowerPriceLimit,$upperStockLimit,$lowerStockLimit,$pressedButton,$sortToggle){
+        return DB::table('products')
+                ->join('companies','products.company_id','=','companies.id')
+                ->select('products.*','companies.company_name')
+                ->where([
+                    ['product_name', 'LIKE', "%$word%"],
+                    ['companies.company_name', 'LIKE', "$selectedCompany"],
+                    ])
+                ->whereBetween('products.price',[$lowerPriceLimit,$upperPriceLimit])
+                ->whereBetween('products.stock',[$lowerStockLimit,$upperStockLimit])
+                ->orderBy($pressedButton,$sortToggle)
+                ->get();
+    }
 
     /**
      * idからリストを取得
@@ -43,44 +57,5 @@ class Product extends Model
                 ->select('products.*','companies.company_name')
                 ->where('products.id','=',$id)
                 ->first();
-    }
-
-    /**
-     * 会社名からリストを取得
-     * @param var $selectedCompany
-     * @return list
-     */
-    public function getProductsByCompany($selectedCompany){
-        return DB::table('products')
-                ->join('companies','products.company_id','=','companies.id')
-                ->select('products.*','companies.company_name')
-                ->where([['companies.company_name', 'LIKE', "%$selectedCompany%"]])
-                ->get();
-    }
-
-    /**
-     * 検索ワードからリストを取得
-     * @param var $word
-     * @return list
-     */
-    public function getProductsByWord($word){
-        return DB::table('products')
-                ->join('companies','products.company_id','=','companies.id')
-                ->select('products.*','companies.company_name')
-                ->where([['product_name', 'LIKE', "%$word%"]])
-                ->get();
-    }
-
-    /**
-     * 検索ワードと会社名からリストを取得
-     * @param var $word,$selectedCompany
-     * @return list
-     */
-    public function getProductsByWordAndCompany($word,$selectedCompany){
-        return DB::table('products')
-                ->join('companies','products.company_id','=','companies.id')
-                ->select('products.*','companies.company_name')
-                ->where([['product_name', 'LIKE', "%$word%"],['companies.company_name', 'LIKE', "$selectedCompany"]])
-                ->get();
     }
 }

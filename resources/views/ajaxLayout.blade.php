@@ -21,5 +21,6 @@
     <footer class="footer bg-dark  fixed-bottom">
         @include('footer')
     </footer>
+    <script src="/js/ajax.js"></script>
 </body>
 </html>

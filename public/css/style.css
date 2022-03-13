@@ -1,0 +1,17 @@
+.home thead th{
+    padding:0;
+    vertical-align: middle;
+}
+
+.sortButton{
+    background-color: transparent;
+    width:100%;
+    padding-top:5px;
+    padding-bottom:5px;
+    font-weight: bold;
+}
+
+button:hover{
+    background-color: transparent;
+    border-color: black;
+}
